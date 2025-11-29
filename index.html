@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Senga Bag'ishlangan</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a0a0a 50%, #0a0000 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+            position: relative;
+            padding: 10px;
+        }
+
+        /* Orqa fonda katta yurak */
+        .background-heart {
+            position: fixed;
+            width: 80vw;
+            height: 80vw;
+            max-width: 350px;
+            max-height: 350px;
+            background: linear-gradient(135deg, rgba(255, 0, 0, 0.25), rgba(139, 0, 0, 0.15));
+            transform: rotate(45deg);
+            animation: flowHeart 10s infinite ease-in-out;
+            z-index: 1;
+            filter: blur(5px);
+            top: 50%;
+            left: 50%;
+            margin-left: -40vw;
+            margin-top: -40vw;
+        }
+
+        .background-heart::before,
+        .background-heart::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: inherit;
+            border-radius: 50%;
+        }
+
+        .background-heart::before {
+            left: -50%;
+        }
+
+        .background-heart::after {
+            top: -50%;
+        }
+
+        @keyframes flowHeart {
+            0%, 100% { 
+                transform: rotate(45deg) scale(1);
+                opacity: 0.4;
+            }
+            25% { 
+                transform: rotate(45deg) scale(1.3);
+                opacity: 0.6;
+            }
+            50% { 
+                transform: rotate(45deg) scale(0.8);
+                opacity: 0.5;
+            }
+            75% { 
+                transform: rotate(45deg) scale(1.2);
+                opacity: 0.7;
+            }
+        }
+
+        /* Yurakchalar animatsiyasi */
+        .heart {
+            position: fixed;
+            width: 15px;
+            height: 15px;
+            background: #ff0000;
+            transform: rotate(45deg);
+            animation: float 10s infinite;
+            opacity: 0;
+            filter: drop-shadow(0 0 8px rgba(255, 0, 0, 0.9));
+            will-change: transform, opacity;
+        }
+
+        .heart::before,
+        .heart::after {
+            content: '';
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            background: inherit;
+            border-radius: 50%;
+        }
+
+        .heart::before {
+            left: -7.5px;
+        }
+
+        .heart::after {
+            top: -7.5px;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(110vh) rotate(45deg) scale(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+                transform: translateY(95vh) rotate(45deg) scale(1);
+            }
+            50% {
+                opacity: 1;
+                transform: translateY(50vh) rotate(225deg) scale(1.3);
+            }
+            90% {
+                opacity: 0.9;
+            }
+            100% {
+                transform: translateY(-15vh) rotate(405deg) scale(0.3);
+                opacity: 0;
+            }
+        }
+
+        .container {
+            text-align: center;
+            z-index: 10;
+            padding: 15px;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .title {
+            color: #ff0000;
+            font-size: clamp(1.8em, 8vw, 2.5em);
+            margin-bottom: 20px;
+            text-shadow: 0 0 25px rgba(255, 0, 0, 0.8), 0 0 40px rgba(255, 0, 0, 0.5), 2px 2px 6px rgba(0,0,0,0.9);
+            animation: fadeIn 2s, dramaticGlow 3s infinite alternate;
+            font-weight: bold;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-30px) scale(0.9); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        @keyframes dramaticGlow {
+            0% { 
+                text-shadow: 0 0 20px rgba(255, 0, 0, 0.6), 0 0 35px rgba(255, 0, 0, 0.4), 2px 2px 6px rgba(0,0,0,0.9);
+            }
+            50% {
+                text-shadow: 0 0 40px rgba(255, 0, 0, 1), 0 0 60px rgba(255, 0, 0, 0.7), 0 0 80px rgba(139, 0, 0, 0.5), 2px 2px 6px rgba(0,0,0,0.9);
+            }
+            100% { 
+                text-shadow: 0 0 30px rgba(255, 0, 0, 0.8), 0 0 50px rgba(255, 0, 0, 0.6), 2px 2px 6px rgba(0,0,0,0.9);
+            }
+        }
+
+        .love-quotes {
+            background: rgba(10, 0, 0, 0.95);
+            border: 2px solid #ff0000;
+            padding: 20px 15px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            box-shadow: 0 0 40px rgba(255, 0, 0, 0.5), 0 0 60px rgba(139, 0, 0, 0.3), 0 10px 40px rgba(0,0,0,0.7);
+        }
+
+        .quote {
+            font-size: clamp(1em, 4.5vw, 1.2em);
+            color: #ffffff;
+            font-style: italic;
+            margin: 15px 0;
+            opacity: 0;
+            animation: slideIn 1.2s forwards;
+            text-shadow: 0 0 15px rgba(255, 0, 0, 0.5), 0 0 25px rgba(255, 0, 0, 0.3);
+        }
+
+        .quote:nth-child(1) { animation-delay: 0.6s; }
+        .quote:nth-child(2) { animation-delay: 1.2s; }
+        .quote:nth-child(3) { animation-delay: 1.8s; }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-40px) scale(0.9); }
+            to { opacity: 1; transform: translateX(0) scale(1); }
+        }
+
+        .envelope-wrapper {
+            margin: 30px auto;
+            cursor: pointer;
+            perspective: 1200px;
+            touch-action: manipulation;
+        }
+
+        .envelope-container {
+            width: 100%;
+            max-width: 340px;
+            height: 260px;
+            position: relative;
+            margin: 0 auto;
+            transition: transform 0.5s ease;
+        }
+
+        .envelope-container:active {
+            transform: scale(0.97);
+        }
+
+        /* Konvert orqa qismi */
+        .envelope-back {
+            width: 100%;
+            max-width: 320px;
+            height: 220px;
+            background: linear-gradient(135deg, #1a0a0a 0%, #2a1515 50%, #1a0a0a 100%);
+            border: 3px solid #ff0000;
+            border-radius: 10px;
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            box-shadow: 0 0 40px rgba(255, 0, 0, 0.7), 0 0 60px rgba(139, 0, 0, 0.4), 0 10px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Konvert yopig'i */
+        .envelope-flap {
+            width: 0;
+            height: 0;
+            border-left: 160px solid transparent;
+            border-right: 160px solid transparent;
+            border-top: 110px solid #ff0000;
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            transform-origin: bottom center;
+            transition: transform 1.3s ease;
+            z-index: 5;
+            filter: drop-shadow(0 0 20px rgba(255, 0, 0, 0.8)) drop-shadow(0 0 40px rgba(139, 0, 0, 0.5));
+        }
+
+        .envelope-container.open .envelope-flap {
+            transform: translateX(-50%) rotateX(180deg);
+        }
+
+        /* Maktub */
+        .letter {
+            width: 90%;
+            max-width: 290px;
+            height: 380px;
+            background: linear-gradient(to bottom, #0a0000, #1a0505);
+            border: 2px solid #ff0000;
+            position: absolute;
+            top: 25px;
+            left: 50%;
+            transform: translateX(-50%) translateY(200px) scale(0.75);
+            padding: 25px 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 40px rgba(255, 0, 0, 0.6), 0 0 60px rgba(139, 0, 0, 0.4);
+            transition: transform 1.3s ease, opacity 1.2s ease;
+            z-index: 1;
+            overflow-y: auto;
+            opacity: 0;
+        }
+
+        .envelope-container.open .letter {
+            transform: translateX(-50%) translateY(-200px) scale(1);
+            opacity: 1;
+            z-index: 6;
+        }
+
+        .letter-content {
+            color: #ffffff;
+            line-height: 1.7;
+        }
+
+        .letter h2 {
+            color: #ff0000;
+            margin-bottom: 15px;
+            font-size: clamp(1.3em, 5vw, 1.6em);
+            text-shadow: 0 0 15px rgba(255, 0, 0, 0.7), 0 0 25px rgba(255, 0, 0, 0.5);
+        }
+
+        .letter p {
+            margin-bottom: 12px;
+            font-size: clamp(0.9em, 3.8vw, 1em);
+            text-shadow: 0 0 8px rgba(255, 0, 0, 0.3);
+        }
+
+        .instruction {
+            color: #ff0000;
+            font-size: clamp(1em, 4.5vw, 1.2em);
+            margin-top: 15px;
+            animation: dramaticPulse 2.5s infinite;
+            text-shadow: 0 0 15px rgba(255, 0, 0, 0.7), 0 0 25px rgba(255, 0, 0, 0.5);
+            font-weight: bold;
+        }
+
+        @keyframes dramaticPulse {
+            0%, 100% { 
+                opacity: 1; 
+                transform: scale(1);
+                text-shadow: 0 0 15px rgba(255, 0, 0, 0.7), 0 0 25px rgba(255, 0, 0, 0.5);
+            }
+            50% { 
+                opacity: 0.6; 
+                transform: scale(1.08);
+                text-shadow: 0 0 30px rgba(255, 0, 0, 1), 0 0 50px rgba(255, 0, 0, 0.8), 0 0 70px rgba(139, 0, 0, 0.6);
+            }
+        }
+
+        .signature {
+            text-align: right;
+            font-style: italic;
+            margin-top: 20px;
+            color: #ff0000;
+            font-size: clamp(1em, 4vw, 1.1em);
+            text-shadow: 0 0 12px rgba(255, 0, 0, 0.6);
+        }
+
+        /* Konvert dekoratsiyasi */
+        .envelope-decoration {
+            width: 80%;
+            max-width: 300px;
+            height: 200px;
+            position: absolute;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2;
+        }
+
+        .heart-seal {
+            width: 60px;
+            height: 60px;
+            background: #ff0000;
+            transform: rotate(45deg);
+            box-shadow: 0 0 30px rgba(255, 0, 0, 1), 0 0 50px rgba(255, 0, 0, 0.7), 0 0 70px rgba(139, 0, 0, 0.5);
+            animation: dramaticHeartbeat 1.8s infinite;
+        }
+
+        .heart-seal::before,
+        .heart-seal::after {
+            content: '';
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background: #ff0000;
+            border-radius: 50%;
+        }
+
+        .heart-seal::before {
+            left: -30px;
+        }
+
+        .heart-seal::after {
+            top: -30px;
+        }
+
+        @keyframes dramaticHeartbeat {
+            0%, 100% { 
+                transform: rotate(45deg) scale(1);
+                box-shadow: 0 0 30px rgba(255, 0, 0, 1), 0 0 50px rgba(255, 0, 0, 0.7), 0 0 70px rgba(139, 0, 0, 0.5);
+            }
+            15% { 
+                transform: rotate(45deg) scale(1.2);
+                box-shadow: 0 0 40px rgba(255, 0, 0, 1), 0 0 70px rgba(255, 0, 0, 0.9), 0 0 100px rgba(139, 0, 0, 0.7);
+            }
+            30% { 
+                transform: rotate(45deg) scale(1);
+            }
+            45% { 
+                transform: rotate(45deg) scale(1.15);
+                box-shadow: 0 0 35px rgba(255, 0, 0, 1), 0 0 60px rgba(255, 0, 0, 0.8), 0 0 90px rgba(139, 0, 0, 0.6);
+            }
+        }
+
+        .envelope-container.open .heart-seal {
+            animation: none;
+            opacity: 0;
+            transition: opacity 0.6s;
+        }
+
+        @media (max-width: 380px) {
+            .envelope-flap {
+                border-left: 140px solid transparent;
+                border-right: 140px solid transparent;
+                border-top: 95px solid #ff0000;
+            }
+            
+            .letter {
+                height: 350px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="background-heart"></div>
+        
+        <h1 class="title">💖 Senga atalgan 💖</h1>
+        
+        <div class="love-quotes">
+            <div class="quote">"Muhabbat bu ikki qalbni birlashuvi"</div>
+            <div class="quote">"Ikki qalb bir-birini xohlashidir"</div>
+            <div class="quote">"Har bir lahza sen bilan alohida go'zal"</div>
+        </div>
+
+        <div class="envelope-wrapper">
+            <div class="envelope-container" id="envelope">
+                <div class="envelope-back"></div>
+                
+                <div class="envelope-decoration">
+                    <div class="heart-seal"></div>
+                </div>
+                
+                <div class="letter">
+                    <div class="letter-content">
+                        <h2>Sevgim!</h2>
+                        <p>
+                            Men senga bu dunyoda hech narsani va'da qila olmayman,<br>
+                            Lekin Jannatda biz xohlagan hamma narsa bo'ladi.<br>
+                            Men Jannatgacha va Jannatda ham senga hamroh bo'lishlikni tavsiya qila olaman halos,<br>
+                            Chunki sen men uchun qadrli insonlardan birisan va o'sha biri bo'lib qolasan.
+                        </p>
+                        <p>
+                            Koshki sen men bo'lsayding,<br>
+                            Sevish mashaqqatin tuysayding.<br>
+                            Koshki men sen bo'lsaydim,<br>
+                            Sevish lazzatin tuysaydim.
+                        </p>
+                        <div class="signature">- Sening sevging 💕</div>
+                    </div>
+                </div>
+                
+                <div class="envelope-flap"></div>
+            </div>
+            <p class="instruction">💖Sen uchun!💖</p>
+        </div>
+    </div>
+
+    <script>
+        // Yurakchalar yaratish - mobil uchun optimallashtirilgan
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.style.left = Math.random() * 100 + 'vw';
+            const duration = Math.random() * 3 + 8;
+            heart.style.animationDuration = duration + 's';
+            const size = Math.random() * 10 + 12;
+            heart.style.width = heart.style.height = size + 'px';
+            
+            const colorVariants = [
+                '#ff0000',
+                '#cc0000', 
+                '#ff3333',
+                '#ff1a1a',
+                '#dd0000',
+                '#8b0000'
+            ];
+            heart.style.background = colorVariants[Math.floor(Math.random() * colorVariants.length)];
+            
+            document.body.appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, duration * 1000);
+        }
+
+        // Mobil uchun kamroq yurakcha yaratish
+        setInterval(createHeart, 300);
+
+        // Konvert animatsiyasi
+        const envelope = document.getElementById('envelope');
+        let isOpen = false;
+        
+        envelope.addEventListener('click', function(e) {
+            e.preventDefault();
+            this.classList.toggle('open');
+            isOpen = !isOpen;
+        });
+
+        // Dastlab bir nechta yurakcha yaratish
+        for(let i = 0; i < 8; i++) {
+            setTimeout(createHeart, i * 150);
+        }
+
+        // Touch eventlarni yaxshilash
+        envelope.addEventListener('touchstart', function(e) {
+            e.preventDefault();
+        }, {passive: false});
+    </script>
+</body>
+</html>
